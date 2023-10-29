@@ -96,23 +96,24 @@ public class B12Selenium3 {
                 yearMin.click();
             }
             yearMin.sendKeys(Keys.BACK_SPACE, "2020", Keys.ENTER);
+            driver.navigate().refresh();
 
             //verify that there are 21 search results, excluding the sponsored result(s).
             List <WebElement> listOfResults = driver.findElements(By.xpath("//li[@class='d-flex mb-0_75 mb-md-1_5 col-12 col-md-6']"));
                 int actualListSize = listOfResults.size();
                 int expectedSize = 21;
                 Assert.assertEquals(actualListSize, expectedSize);
-                //System.out.println(actualListSize);
+                System.out.println(actualListSize);
 
             //verify that each search result title contains ‘Tesla Model 3’ & verify that each year is within the selected range (2020-2023)
-            List <WebElement> titles = driver.findElements(By.xpath("//div[@id='results-container']//div[@class='size-16 font-weight-bold mb-0_5 text-blue-30']"));
+            List <WebElement> titles = driver.findElements(By.xpath("//li[@class='d-flex mb-0_75 mb-md-1_5 col-12 col-md-6']//img"));
             String searchTermTesla = "Tesla Model 3";
             for (WebElement title : titles){
-                System.out.println(title.getText());
-                int year = Integer.parseInt(title.getText().substring(0,4));
-                //System.out.println(year);
-                Assert.assertTrue(title.getText().toLowerCase().contains(searchTermTesla.toLowerCase()));
-                //assert(2020 <= year && year <= 2023);
+                //System.out.println(title.getAttribute("alt"));
+                int year = Integer.parseInt(title.getAttribute("alt").substring(0,4));
+                System.out.println(year);
+                Assert.assertTrue(title.getAttribute("alt").toLowerCase().contains(searchTermTesla.toLowerCase()));
+                assert(2020 <= year && year <= 2023);
             }
 
 
