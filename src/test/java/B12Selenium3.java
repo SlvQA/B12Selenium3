@@ -15,8 +15,6 @@ public class B12Selenium3 {
             //navigate to the webpage
             driver.manage().window().maximize();
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-            //            wait.until(ExpectedConditions.elementToBeClickable(yearMin));
             driver.get("https://www.edmunds.com/");
 
             //verify the title
@@ -161,17 +159,14 @@ public class B12Selenium3 {
             List<WebElement> listOfResults1 = driver.findElements(By.xpath("//li[@class='d-flex mb-0_75 mb-md-1_5 col-12 col-md-6']"));
             listOfResults1.get(listOfResults1.size() - 1).click();
 
-            Map<Integer, String> map = new HashMap<Integer, String>();
+            Map<Integer, String> map = new HashMap<>();
 // Adding elements to map
             map.put(1, driver.findElement(By.xpath("//h1[@class='d-inline-block mb-0 heading-2 mt-0_25']")).getText());
             map.put(2, driver.findElement(By.xpath("//span[@data-testid='vdp-price-row']")).getText());
             map.put(3, driver.findElement(By.xpath("//ul[@class='mb-0 pl-0 pr-1 col-12 col-md-6']//div[@class='pr-0 font-weight-bold text-right ml-1 col']")).getText());
 // Traversing Map
             Map<Integer, String> expectedMap = Map.of(1, "2023 Tesla Model 3", 2, "$38,990", 3, "3,416");
-            for (Map.Entry<Integer, String> entry : map.entrySet()){
-                //System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
-                Assert.assertEquals(map, expectedMap);
-            }
+            Assert.assertEquals(map, expectedMap);
 
             //navigate to the previous page and check if the clicked result has "Viewed" element on it
             driver.navigate().back();
